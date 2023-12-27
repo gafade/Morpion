@@ -1,10 +1,8 @@
 # Morpion
 TP reso : Serveur et clients
-RAUSCHER André
-RAYNAUD Martin
-FADE Gilles-Arthur
 
+Branche master :
 
-Branche main :
+Ici la version en cours.
+Vous avez le droit de faire une branche chacun.
 
-Le projet qui sera rendu, mettez les programmes sur master.
