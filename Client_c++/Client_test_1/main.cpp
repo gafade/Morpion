@@ -30,20 +30,22 @@ int main() {
 
 	sf::TcpSocket socket;
 	socket.connect("127.0.0.1", 8088);
-	std::cout << "Client connecté. Port distant : "  << endl;
+	std::cout << "Client connecté"  << endl;
 	/*std::cout << "Port local:" + socket.getLocalPort() << endl;*/
 	
 
-
 	unsigned int pid = GetCurrentProcessId();
 	
-	std::ostringstream oss;
-	oss << "Client à serveur. J'utilise le pid : " + pid;
+	string messageToSend;
+	messageToSend += "Client a serveur. J'utilise le pid : " + to_string(pid);
+	
+	unsigned char data[100] = { 0 };
 
-	if (socket.send(oss.str().c_str(), 50) != sf::Socket::Done)
-		std::cout << "Erreur envoi de données" << endl;
+	std::copy(messageToSend.begin(), messageToSend.end(), data);
 
-	char dataReceived[100];
+	socket.send(data, 100);
+
+	char dataReceived[100] = { 0 };
 	std::size_t received;
 
 	if (socket.receive(dataReceived, 100, received) != sf::Socket::Done)
@@ -51,6 +53,8 @@ int main() {
 		std::cout << "Erreur réception de données" << endl;
 	}
 	std::cout << "Received:" << received << " bytes" << std::endl;
+	std::cout << "Received:" << dataReceived << " bytes" << std::endl;
+
 
 	return 0;
 }
