@@ -11,6 +11,5 @@
 #include <chrono>
 #include <queue>
 #include <iterator>
-#include <string.h>
 #include <Windows.h>
 

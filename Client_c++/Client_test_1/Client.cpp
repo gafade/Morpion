@@ -16,7 +16,7 @@ Client::~Client()
 
 void Client::initConnection()
 {
-	float time = 1;
+	float time = 10;
 	Time timeout = seconds(time);
 	
 	while (socket->connect("127.0.0.1", 2100, timeout) != Socket::Done) {
