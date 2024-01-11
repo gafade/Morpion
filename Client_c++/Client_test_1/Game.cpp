@@ -5,7 +5,7 @@ void Game::initVariables()
 {
 	this->window = nullptr;
 	this->client = new Client();
-	this->textureCross.loadFromFile("Textures/crossTransparentFont.png");
+	this->textureCross.loadFromFile("Textures/crossNotOriginal.png");//il faudrait push avec ton png à toi crossTransparentFont.png");
 	this->font.loadFromFile("Font/arial.ttf");
 
 	initGrid();
@@ -94,6 +94,7 @@ Game::~Game()
 const bool Game::running() const
 {
 	return this->window->isOpen();
+
 }
 
 // Functions
