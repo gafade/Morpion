@@ -5,7 +5,7 @@ void Game::initVariables()
 {
 	this->window = nullptr;
 	this->client = new Client();
-	this->textureCross.loadFromFile("Textures/crossTransparentFont.png");
+	this->textureCross.loadFromFile("Textures/crossNotOriginal.png");
 	this->font.loadFromFile("Font/arial.ttf");
 
 	initGrid();

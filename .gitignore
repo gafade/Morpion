@@ -4,3 +4,6 @@
 
 /.vs
 /Client_c++/Client_test_1/.vs/Jeu Morpion
+/Client_c++/Client_test_1/x64/Debug
+/Client_c++/Client_test_1/Client_test_1.vcxproj
+/Client_c++/Client_test_1/Client_test_1.vcxproj.user
