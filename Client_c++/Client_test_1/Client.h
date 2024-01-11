@@ -6,6 +6,9 @@
 #include <thread>
 #include <queue>
 
+#define CONDITIONS (this->clientStatus != Socket::Disconnected) && (this->clientStatus != Socket::Error)
+
+
 using namespace std;
 using namespace sf;
 
@@ -22,10 +25,9 @@ private:
 	thread threadBasicConnexion;
 	thread threadSendMessage;
 	thread threadReceiveMessage;
-	thread analyseData;
 	queue<string> messagesToSend;
-	Mutex mutex;
-
+	queue<string> messagesReceived;
+	Mutex mutexSending;
 
 
 	// Functions
@@ -41,11 +43,22 @@ public:
 	Client();
 	virtual ~Client();
 
+	queue<string> getMessagesReceived () {
+		return this->messagesReceived;
+	}
+
+	void setMessagesReceived(queue<string> newListMessagesReceived) {
+		this->messagesReceived = newListMessagesReceived;
+	}
+
 	void sendMessage();
 	void receiveMessage();
 
 	// Functions
 	void launchThreadConnexion();
 	void addMessageToQueue(string newMessage);
+
+	Mutex mutexReceiving;
+
 };
 

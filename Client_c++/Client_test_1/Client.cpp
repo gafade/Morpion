@@ -1,6 +1,5 @@
 #include "Client.h"
 
-#define CONDITIONS (this->clientStatus != Socket::Disconnected) && (this->clientStatus != Socket::Error)
 
 
 Client::Client()
@@ -22,11 +21,16 @@ void Client::initConnection()
 	while (socket->connect("127.0.0.1", 2100, timeout) != Socket::Done) {
 		cout << "En attente d'une connexion avec le serveur" << endl;
 	}
-	
+
 	cout << "Client connecté" << endl;
 	
+	string messageToSend;
 
-	string messageToSend;	
+	cout << "Entrez votre pseudo" << endl;
+
+	cin >> messageToSend;
+
+	// Envoyez le pseudo au serveur
 
 	messagesToSend.push(messageToSend);
 
@@ -47,15 +51,16 @@ void Client::sendMessage()
 	while (CONDITIONS) {
 
 		while (!messagesToSend.empty()) {
+			this->mutexSending.lock();
+			
 			unsigned char data[100] = { 0 };
 			string messageToSend = this->messagesToSend.front();
-
 			copy(messageToSend.begin(), messageToSend.end(), data);
 
-			this->mutex.lock();
 			socket->send(data, 100);
 			messagesToSend.pop();
-			this->mutex.unlock();
+
+			this->mutexSending.unlock();
 		}
 
 	}
@@ -72,10 +77,11 @@ void Client::receiveMessage()
 		this->clientStatus = socket->receive(dataReceived, 100, received);
 		if (CONDITIONS)
 		{
-			this->mutex.lock();
+			this->mutexReceiving.lock();
 			messageReceived.assign(dataReceived);
+			this->messagesReceived.push(messageReceived);
 			cout << "Message recu : " << messageReceived << std::endl;
-			this->mutex.unlock();
+			this->mutexReceiving.unlock();
 		}
 		else {
 			cout << "En attente d'une réception de données" << endl;
@@ -95,7 +101,7 @@ void Client::launchThreadConnexion()
 
 void Client::addMessageToQueue(string newMessage)
 {
-	this->mutex.lock();
+	this->mutexSending.lock();
 	this->messagesToSend.push(newMessage);
-	this->mutex.unlock();
+	this->mutexSending.unlock();
 }

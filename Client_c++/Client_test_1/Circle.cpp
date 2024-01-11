@@ -24,6 +24,6 @@ void Circle::initCircleSymbol()
 	this->circleSymbol.setRadius(110.f);
 	this->circleSymbol.setFillColor(Color::Transparent);
 	this->circleSymbol.setOutlineThickness(-20.f);
-	this->circleSymbol.setOutlineColor(Color::Black);
+	this->circleSymbol.setOutlineColor(Color::Red);
 	this->circleSymbol.setPosition(this->pos);
 }

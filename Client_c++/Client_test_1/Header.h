@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <iostream>
-#include <thread>
 #include <chrono>
 #include <queue>
 #include <iterator>

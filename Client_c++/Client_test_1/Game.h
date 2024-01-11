@@ -6,6 +6,7 @@
 #include <vector>
 #include "CrossInfo.h"
 #include "Circle.h"
+#include <thread>
 
 
 using namespace std;
@@ -37,8 +38,11 @@ private:
 	vector<Circle> listCircleElement;
 	vector<int> listPosOccupied;
 
+	thread threadAnalyseDataReceived;
+
 	bool circleToDraw = true;
 	bool leftClickIsPressed;
+	bool socketIsOpened = true;
 
 	Font font;
 	Text text;
@@ -62,6 +66,8 @@ private:
 	void createSymbol(int posGrid);
 	void closeConnection();
 
+	void analyseMessage(string lastMessage);
+
 
 
 public:
@@ -79,6 +85,7 @@ public:
 	void update();
 	void render();
 
+	void analyseDataReceived();
 
 
 

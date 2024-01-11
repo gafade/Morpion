@@ -10,6 +10,9 @@ void Game::initVariables()
 
 	initGrid();
 	initText();
+	
+	threadAnalyseDataReceived = thread(&Game::analyseDataReceived, this);
+
 	//initCrossSymbol();
 	//initCircleSymbol();
 }
@@ -215,8 +218,39 @@ void Game::createSymbol(int posGrid)
 
 void Game::closeConnection()
 {
+	this->socketIsOpened = false;
 	// A la place:
 	// il faut envoyer un packet avec l'action CLOSE_CONNECTION
+}
+
+void Game::analyseMessage(string lastMessage)
+{
+
+}
+
+void Game::analyseDataReceived()
+{
+	while (this->socketIsOpened) {
+		if (this->client->getMessagesReceived().size() > 0) {
+			this->client->mutexReceiving.lock();
+
+			string lastMessage = this->client->getMessagesReceived().front();
+			this->analyseMessage(lastMessage);
+
+			queue<string> newListMessagesReceived;
+
+			newListMessagesReceived = this->client->getMessagesReceived();
+
+			newListMessagesReceived.pop();
+
+			this->client->setMessagesReceived(newListMessagesReceived);
+
+			this->client->mutexReceiving.unlock();
+		}
+
+
+
+	}
 }
 
 
