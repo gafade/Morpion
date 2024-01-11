@@ -48,4 +48,12 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="Font\arial.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Textures\crossNotOriginal.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
