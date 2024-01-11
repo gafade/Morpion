@@ -55,5 +55,8 @@
     <Image Include="Textures\crossNotOriginal.png">
       <Filter>Fichiers de ressources</Filter>
     </Image>
+    <Image Include="Textures\cross.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
   </ItemGroup>
 </Project>

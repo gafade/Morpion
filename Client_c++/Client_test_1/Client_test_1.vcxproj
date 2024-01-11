@@ -182,6 +182,7 @@
     <Font Include="Font\arial.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Textures\cross.png" />
     <Image Include="Textures\crossNotOriginal.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
