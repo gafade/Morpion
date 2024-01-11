@@ -42,8 +42,6 @@ public:
 	void sendMessage();
 	void receiveMessage();
 
-	// Functions
 	void launchThreadConnexion();
-	void addMessageToQueue(string newMessage);
 };
 

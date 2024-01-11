@@ -103,7 +103,6 @@ void Game::pollEvents()
 	while (this->window->pollEvent(this->event))
 	{
 		if (this->event.type == Event::Closed)
-			this->closeConnection();
 			this->window->close();
 	}
 }
@@ -207,13 +206,6 @@ void Game::createSymbol(int posGrid)
 	else {
 		cout << "Case deja occupee par un symbole" << endl;
 	}
-}
-
-void Game::closeConnection()
-{
-	// this->client->addMessageToQueue("FIN"); -> Plus d'actualité
-	// A la place:
-	// il faut envoyer un packet avec l'action CLOSE_CONNECTION
 }
 
 

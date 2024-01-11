@@ -27,8 +27,7 @@ void Client::initConnection()
 	
 
 	string messageToSend;
-	//messageToSend += "Client a serveur. J'utilise le pid : " + to_string(pid);
-	
+	messageToSend += "Client a serveur. J'utilise le pid : " + to_string(pid);
 
 	messagesToSend.push(messageToSend);
 
@@ -90,11 +89,4 @@ void Client::receiveMessage()
 void Client::launchThreadConnexion()
 {
 	this->threadBasicConnexion = thread(&Client::initConnection, this);
-}
-
-void Client::addMessageToQueue(string newMessage)
-{
-	this->mutex.lock();
-	this->messagesToSend.push(newMessage);
-	this->mutex.unlock();
 }

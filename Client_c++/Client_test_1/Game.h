@@ -58,7 +58,6 @@ private:
 	void checkWin();
 	void onMouseClick();
 	void createSymbol(int posGrid);
-	void closeConnection();
 
 
 
