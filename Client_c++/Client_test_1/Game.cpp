@@ -132,7 +132,7 @@ void Game::checkMouseClick()
 void Game::checkWin()
 {
 	if (listPosOccupied.size() == 9)
-		this->text.setString("Je t'aime Agathe");
+		this->text.setString("Match nul");
 }
 
 void Game::update()
