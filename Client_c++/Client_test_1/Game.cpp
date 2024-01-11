@@ -12,6 +12,7 @@ void Game::initVariables()
 	initText();
 	//initCrossSymbol();
 	//initCircleSymbol();
+	PacketClient* eer = new PacketClient(LAUNCH_GAME, 3);
 }
 
 void Game::initWindow()

@@ -6,6 +6,7 @@
 #include <vector>
 #include "CrossInfo.h"
 #include "Circle.h"
+#include "PacketClient.h"
 
 
 using namespace std;
