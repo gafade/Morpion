@@ -32,6 +32,7 @@ void Game::initWindow()
 //	this->circleSymbol.setOutlineColor(Color::Black);
 //}
 //
+
 Sprite Game::initCrossSymbol(Sprite crossSymbol, Vector2f pos)
 {
 	crossSymbol.setPosition(pos);
@@ -196,6 +197,7 @@ void Game::createSymbol(int posGrid)
 		if (circleToDraw) {
 			Circle newCircle(posGrid);
 			listCircleElement.push_back(newCircle);
+			// Envoi d'un coup
 		}
 		else {
 			CrossInfo newCrossInfo(posGrid);
@@ -213,10 +215,10 @@ void Game::createSymbol(int posGrid)
 
 void Game::closeConnection()
 {
-	// this->client->addMessageToQueue("FIN"); -> Plus d'actualité
 	// A la place:
 	// il faut envoyer un packet avec l'action CLOSE_CONNECTION
 }
+
 
 
 

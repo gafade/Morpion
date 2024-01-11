@@ -22,8 +22,10 @@ private:
 	thread threadBasicConnexion;
 	thread threadSendMessage;
 	thread threadReceiveMessage;
+	thread analyseData;
 	queue<string> messagesToSend;
 	Mutex mutex;
+
 
 
 	// Functions

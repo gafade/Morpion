@@ -31,6 +31,8 @@ private:
 
 	Vector2i mousePos;
 
+	queue<string> messagesReceived;
+
 	vector<Sprite> listCrossElement;
 	vector<Circle> listCircleElement;
 	vector<int> listPosOccupied;

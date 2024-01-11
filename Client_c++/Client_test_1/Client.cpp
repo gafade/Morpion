@@ -26,9 +26,7 @@ void Client::initConnection()
 	cout << "Client connecté" << endl;
 	
 
-	string messageToSend;
-	//messageToSend += "Client a serveur. J'utilise le pid : " + to_string(pid);
-	
+	string messageToSend;	
 
 	messagesToSend.push(messageToSend);
 
@@ -41,6 +39,7 @@ void Client::initConnection()
 void Client::initVariables()
 {
 	this->pid = GetCurrentProcessId();
+
 }
 
 void Client::sendMessage()
@@ -65,7 +64,6 @@ void Client::sendMessage()
 
 void Client::receiveMessage()
 {
-	
 	char dataReceived[100] = { 0 };
 	size_t received;
 	string messageReceived;
@@ -86,6 +84,9 @@ void Client::receiveMessage()
 	}
 
 }
+
+
+
 
 void Client::launchThreadConnexion()
 {
