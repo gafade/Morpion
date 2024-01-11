@@ -5,7 +5,7 @@ void Game::initVariables()
 {
 	this->window = nullptr;
 	this->client = new Client();
-	this->textureCross.loadFromFile("Textures/crossNotOriginal.png");//il faudrait push avec ton png à toi crossTransparentFont.png");
+	this->textureCross.loadFromFile("Textures/cross.png");//il faudrait push avec ton png à toi crossTransparentFont.png");
 	this->font.loadFromFile("Font/arial.ttf");
 
 	initGrid();
@@ -102,9 +102,11 @@ void Game::pollEvents()
 {
 	while (this->window->pollEvent(this->event))
 	{
-		if (this->event.type == Event::Closed)
+		if (this->event.type == Event::Closed) {
 			this->closeConnection();
 			this->window->close();
+
+		}
 	}
 }
 
