@@ -85,26 +85,34 @@ public:
 
 
     string encode() {
-        return "{" + to_string(this->action ) + " }:{"+ to_string(this->move) +" } : {"+ to_string(this->numPlayer)  +" } : "  + this->pseudo + " : " + this->pseudoOpponent;
+        return to_string(this->action ) + ":"+ to_string(this->move) +" :"+ to_string(this->numPlayer)  +" :"  + this->pseudo + " : " + this->pseudoOpponent;
     }
 
-    void decode( string messageReceived){
+    void decode(string messageReceived) {
+        
+        /*
+        //separer le msg
+        string messageSplit = "";
 
-        string messageSplit = messageReceived;
+        char* word[30];
+        char* reste = NULL;
+
+        int i = 0;
+        word[i] = strtok_s(messageReceived, ":");
+        while (word[i]!=NULL) {
+        
+        // break the string when it encounters empty space
+         word = strtok_s(messageReceived, "{", &reste);
+    }
+
+
         this->action = Action( int(messageSplit[0]) );
         this->move = int(messageSplit[1]);
         this->numPlayer = int(messageSplit[2]);
         this->pseudo = messageSplit[3];
         this->pseudoOpponent = messageSplit[4];
-
-
-        char quote[] = "Remember me when you look at the moon!";
-        char* reste = NULL;
-        // break the string when it encounters empty space
-        char* word = strtok_s(quote, " ", &reste);
-
-        cout << word;
-    }
+        
+    }*/
 
     
 };
