@@ -92,6 +92,7 @@ public:
 
     void decode(const char* messageReceived) {
         
+        //avoir une copie de la str, +1 car charactere de fin "\0"
         char* mod=new char[strlen(messageReceived)+1];
         strcpy_s(mod, strlen(messageReceived)+1, messageReceived);
         //separer le msg
@@ -113,6 +114,10 @@ public:
         this->pseudo = messageSplit[3];
         this->pseudoOpponent = messageSplit[4];
         
+    }
+    void decode(string messageReceived) {
+        this->decode(messageReceived.c_str());
+
     }
 
     

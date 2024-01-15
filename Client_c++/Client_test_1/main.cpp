@@ -9,8 +9,11 @@ int main()
     //tests
 
     PacketClient p;
-    
+    string pok = "2:76:98:TUVWKCUX:vtyvwbl";
     p.decode("1:5:278:k:m:opj");
+    cout << p.encode() << endl;
+
+    p.decode(pok);
     cout << p.encode() << endl;
 
     /*
