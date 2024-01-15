@@ -1,6 +1,8 @@
+#pragma once
 #include <string>
 #include <format>
 #include<iostream>
+
 using namespace std;
 
 
@@ -63,7 +65,15 @@ private:
 
 public:
 
+    PacketClient() {
+        this->action = PSEUDO;
+        this->move = -1;
+        this->numPlayer = -1;
+        this->pseudo ="None";
+        this->pseudoOpponent = "None";
 
+
+    }
     PacketClient(Action action,int move = 0,int numPlayer = 0, string pseudo= "None", string pseudoOpponent="None") {
         this->action = action;
         this->move = move;
@@ -71,48 +81,39 @@ public:
         this->pseudo = pseudo;
         this->pseudoOpponent = pseudoOpponent;
 
-
-
-        char quote[] = "Remember me when you look at the moon!";
-        char* reste=NULL;
-        // break the string when it encounters empty space
-        char* word = strtok_s(quote, " ",&reste);
-
-        cout << word;
     }
 
     
 
 
     string encode() {
-        return to_string(this->action ) + ":"+ to_string(this->move) +" :"+ to_string(this->numPlayer)  +" :"  + this->pseudo + " : " + this->pseudoOpponent;
+        return to_string(this->action ) + " :"+ to_string(this->move) +" : "+ to_string(this->numPlayer)  +" : "  + this->pseudo + " : " + this->pseudoOpponent;
     }
 
-    void decode(string messageReceived) {
+    void decode(const char* messageReceived) {
         
-        /*
+        char* mod=new char[strlen(messageReceived)+1];
+        strcpy_s(mod, strlen(messageReceived)+1, messageReceived);
         //separer le msg
-        string messageSplit = "";
-
-        char* word[30];
+        char* messageSplit[10];
         char* reste = NULL;
-
         int i = 0;
-        word[i] = strtok_s(messageReceived, ":");
-        while (word[i]!=NULL) {
-        
-        // break the string when it encounters empty space
-         word = strtok_s(messageReceived, "{", &reste);
+        messageSplit[i] = strtok_s(mod, ":",&reste);
+        while (messageSplit[i]!=NULL and i<10) {//10 est le nb max de nombre
+            i++;
+            // break the string when it encounters empty space
+            messageSplit[i] = strtok_s(NULL, ":",&reste);
+
     }
 
 
-        this->action = Action( int(messageSplit[0]) );
-        this->move = int(messageSplit[1]);
-        this->numPlayer = int(messageSplit[2]);
+        this->action = Action( atoi(messageSplit[0]) );
+        this->move = atoi(messageSplit[1]);
+        this->numPlayer = atoi(messageSplit[2]);
         this->pseudo = messageSplit[3];
         this->pseudoOpponent = messageSplit[4];
         
-    }*/
+    }
 
     
 };
