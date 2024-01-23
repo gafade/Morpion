@@ -181,6 +181,7 @@ void Game::drawElements()
 		this->window->draw(this->listCircleElement[j].getCircleSymbol());
 	}
 }
+// test
 
 void Game::onMouseClick()
 {
