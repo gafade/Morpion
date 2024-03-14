@@ -26,5 +26,8 @@ public:
 	Vector2f getCrossSymbolPos() {
 		return this->pos;
 	}
+	int getPosGrid() {
+		return this->posGrid;
+	}
 };
 

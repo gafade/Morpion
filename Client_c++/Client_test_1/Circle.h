@@ -29,5 +29,9 @@ public:
 	CircleShape getCircleSymbol() {
 		return this->circleSymbol;
 	}
+	int getPosGrid() {
+		return this->posGrid;
+
+	}
 };
 

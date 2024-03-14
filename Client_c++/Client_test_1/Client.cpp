@@ -18,7 +18,7 @@ void Client::initConnection()
 	float time = 10;
 	Time timeout = seconds(time);
 	
-	while (socket->connect("127.0.0.1", 2100, timeout) != Socket::Done) {
+	while (socket->connect("127.0.0.1", 2100, timeout) != Socket::Done) {//127.0.0.1
 		cout << "En attente d'une connexion avec le serveur" << endl;
 	}
 
@@ -32,7 +32,7 @@ void Client::initConnection()
 
 	// Envoyez le pseudo au serveur
 
-	messagesToSend.push(messageToSend);
+	addMessageToQueue("0:10:0:"+messageToSend+":Unknown");
 
 	threadSendMessage = thread(&Client::sendMessage, this);
 

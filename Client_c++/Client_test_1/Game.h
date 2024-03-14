@@ -31,12 +31,13 @@ private:
 	Texture textureCross;
 
 	Vector2i mousePos;
-
+	
 	queue<string> messagesReceived;
 
 	vector<Sprite> listCrossElement;
 	vector<Circle> listCircleElement;
 	vector<int> listPosOccupied;
+	vector<int> listCircleOccupied;//GA added that
 
 	thread threadAnalyseDataReceived;
 
@@ -62,7 +63,9 @@ private:
 	void drawElements();
 	void checkMouseClick();
 	void checkWin();
+	void WinMessage(bool who);//GA added that
 	void onMouseClick();
+	void newonMouseClick();//GA added that
 	void createSymbol(int posGrid);
 	void closeConnection();
 

@@ -47,7 +47,7 @@ Grille de morpion avec les num de coups associés:
 
 class Packet:
 
-    def __init__(self, action = None, move = None, numPlayer = None, pseudo = None, pseudoOpponent = None):
+    def __init__(self, action = None, move = -1, numPlayer = None, pseudo = "Packet undefined", pseudoOpponent = "Packet undefined"):
         self.action = action
         self.move = move
         self.numPlayer = numPlayer
@@ -55,12 +55,10 @@ class Packet:
         self.pseudoOpponent = pseudoOpponent
 
     def __repr__(self):
-        return "{}:{}:{}:".format(self.action.value, self.move, self.numPlayer) + self.pseudo + ":" \
-            + self.pseudoOpponent
+        return "{}:{}:{}:".format(self.action.value, self.move, self.numPlayer) + self.pseudo + ":"+ self.pseudoOpponent
 
     def encode(self):
-        return "{}:{}:{}:".format(self.action.value, self.move, self.numPlayer) + self.pseudo + ":" \
-            + self.pseudoOpponent
+        return "{}:{}:{}:".format(self.action.value, self.move, self.numPlayer) + self.pseudo + ":"+ self.pseudoOpponent
 
     def decode(self, messageReceived):
         messageSplit = messageReceived.split(":")

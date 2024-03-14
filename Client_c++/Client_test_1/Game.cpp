@@ -125,7 +125,8 @@ void Game::checkMouseClick()
 
 	if (Mouse::isButtonPressed(Mouse::Left) && (leftClickIsPressed == false)) {
 		leftClickIsPressed = true;
-		this->onMouseClick();
+		//this->onMouseClick();
+		this->newonMouseClick();
 	}
 	else {
 		if (not Mouse::isButtonPressed(Mouse::Left))
@@ -135,8 +136,62 @@ void Game::checkMouseClick()
 
 void Game::checkWin()
 {
-	if (listPosOccupied.size() == 9)
-		this->text.setString("Match nul");
+	if (listCircleOccupied.size() == 9) {//stocke valeurs de -9 à -1 et de 1 à 9
+
+
+		int circles[9] = { 0,0,0,0,0,0,0,0,0 };
+		int crosses[9] = { 0,0,0,0,0,0,0,0,0 };
+		for (int i = 0;i < listCircleOccupied.size();i++) {
+			//positive if cross, negative if circle
+			if (listCircleOccupied[i]<0) {
+				circles[i] = -listCircleOccupied[i];
+			}
+			else {
+				crosses[i] = listCircleOccupied[i];
+			}
+		}
+		//Solutions:
+		/*
+		-lignes : 012,345,678 : step of 1
+		-colonnes: 036,147,258: step of 3 
+		-diagonales: 048,246 : step of 4,step of 2 
+		*/
+
+		bool moves[9] = { 0,0,0 ,0,0,0 ,0,0,0 };
+
+		for (int pos = 1;pos <= 9;pos++) {
+			for (int i = 0;i < 9;i++) {
+				if (circles[i] == pos) {
+					moves[pos-1] = 1;
+					break;
+				}
+			}
+		}
+ 		//lignes
+		if (moves[0] == moves[1] and moves[1] == moves[2]) { this->WinMessage(moves[0]); }
+		else if (moves[3] == moves[4] and moves[4] == moves[5]) { this->WinMessage(moves[3]); }
+		else if (moves[6] == moves[7] and moves[7] == moves[8]) { this->WinMessage(moves[6]); }
+		//colonnes
+		else if (moves[0] == moves[3] and moves[3] == moves[6]) { this->WinMessage(moves[0]); }
+		else if (moves[1] == moves[4] and moves[4] == moves[7]) { this->WinMessage(moves[1]); }
+		else if (moves[2] == moves[5] and moves[5] == moves[8]) { this->WinMessage(moves[2]); }
+		//diagonales
+		else if (moves[0] == moves[4] and moves[4] == moves[8]) { this->WinMessage(moves[0]); }
+		else if (moves[2] == moves[4] and moves[4] == moves[6]) { this->WinMessage(moves[2]); }
+		//other
+		else {
+			this->text.setString("Match nul");
+		}
+	}
+}
+
+void Game::WinMessage(bool who) {
+	if (who == 1) {
+		this->text.setString("Cercle a gagné");
+	}
+	else {
+		this->text.setString("Croix a gagné");
+	}
 }
 
 void Game::update()
@@ -182,7 +237,10 @@ void Game::drawElements()
 	}
 }
 // test
-
+//instead of filling IF there is a mouse click, we will first send the click to server 
+//AND THEN wait for the server's answer
+//server has a variable to decide which turn it is to play :
+//every correct click is sent to the server and only the correct one warrants a "accepted move response"
 void Game::onMouseClick()
 {
 	if ((25 < this->mousePos.x) && (this->mousePos.x < 750) && (25 < this->mousePos.y) && (this->mousePos.y < 750)) {
@@ -194,14 +252,29 @@ void Game::onMouseClick()
 	}
 }
 
+void Game::newonMouseClick() {
+
+	if ((25 < this->mousePos.x) && (this->mousePos.x < 750) && (25 < this->mousePos.y) && (this->mousePos.y < 750)) {
+		int posGrid = (this->mousePos.x - 25) / 250 + ((this->mousePos.y - 25) / 250) * 3;
+		//client->sendMessage();
+		// : is the delimiter of : type:move:numPlayer:pseudo:opponent
+		string message = "2:"+to_string(posGrid)+":0:nAn:NaN";//2 for indicating a move
+		cout << "Played : "<<to_string(posGrid) << endl;
+		client->addMessageToQueue(message);//le Uint32 le transforem en emoji??
+	}
+	else {
+		cout << "En dehors de la grille" << endl;
+	}
+}
+
 void Game::createSymbol(int posGrid)
 {
 	if ((find(listPosOccupied.begin(), listPosOccupied.end(), posGrid) == listPosOccupied.end()) || (listPosOccupied.size() == 0) || ((listPosOccupied.size() == 1) && (listPosOccupied[0] != posGrid))) {
-		listPosOccupied.push_back(posGrid);
+		listPosOccupied.push_back(posGrid);//positive if cross, negative if circle
+		listCircleOccupied.push_back((int)(posGrid+1) * pow(-1, circleToDraw));//de -9 à -1 et de 1 à 9
 		if (circleToDraw) {
 			Circle newCircle(posGrid);
 			listCircleElement.push_back(newCircle);
-			// Envoi d'un coup
 		}
 		else {
 			CrossInfo newCrossInfo(posGrid);
@@ -226,7 +299,54 @@ void Game::closeConnection()
 
 void Game::analyseMessage(string lastMessage)
 {
+	//what the server can say in utf-8 :
 
+	//Welcome
+	//Currently searching for game
+	//Game start
+	//Circle [pos]
+	//Cross [pos]
+	//Victory
+	//Lose 
+	//Disconnect
+	//Gooodbye
+	 
+	
+	//NOn packet stuff is already just cout-ed
+	//here is the formating of packets server-side
+	//return "{}:{}:{}:".format(self.action.value, self.move, self.numPlayer) + self.pseudo + ":" \
+            + self.pseudoOpponent
+	string component[7] = { "None","None","None","None","None","None","None" };
+	int i = 0;
+	int first = 0;
+	int last = lastMessage.find(":",first);
+	while (lastMessage.find(":", first) != -1 and i<7) {
+		if (first == 0) {//this is the first substring
+			component[i] = (lastMessage.substr(first, last - first));
+		}
+		else if (last == -1) {//this is the last substring
+			component[i] = lastMessage.substr(first+1);
+		}
+		else {
+			component[i] = (lastMessage.substr(first+1, last - first-1));
+		}
+		cout << "Step by Step : " << component[i] << endl;
+		i++;
+		first = last;
+		last = lastMessage.find(":",first+1);
+		
+	}
+
+	if (component[0] == "1") {//LAUNCH GAME PACKET
+		cout << "Game found against : " << component[4] << endl << endl;
+	}
+	else if(component[0]=="2") {
+		cout << "Someone played : " << component[1] << endl;
+		this->createSymbol( stoi(component[1]));
+	}
+	else {
+		cout << "NON RECOGNIZED PACKET";
+	}
 }
 
 void Game::analyseDataReceived()
