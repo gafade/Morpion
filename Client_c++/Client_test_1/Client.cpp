@@ -18,7 +18,7 @@ void Client::initConnection()
 	float time = 10;
 	Time timeout = seconds(time);
 	
-	while (socket->connect("127.0.0.1", 2100, timeout) != Socket::Done) {//127.0.0.1
+	while (socket->connect("86.242.104.23", 2100, timeout) != Socket::Done) {//127.0.0.1
 		cout << "En attente d'une connexion avec le serveur" << endl;
 	}
 
